@@ -2,69 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .star {
-    background-color: #dfb427;
-    position: absolute;
-    border-radius: 50%;
-    z-index: 5;
-  }
-
-  .lanternX {
-    position: absolute;
-    bottom: -80px;
-    transform: translateX(0);
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    z-index: 10;
-    @apply transition-all;
-  }
-
-  @keyframes lanternX {
-    50% {
-      transform: translateX(var(--translateX));
-    }
-  }
-
-  @keyframes lanternY {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-200px);
-    }
-    100% {
-      transform: translateY(-400px);
-    }
-  }
-  .lanternY {
-    animation: lanternY var(--duration) ease-in-out infinite; /* Add this line */
-  }
-
-  .tooltip {
-    @apply absolute top-0 left-1/2 p-1 rounded-full text-xs font-bold opacity-0 pointer-events-none transform -translate-x-1/2 -translate-y-full transition-opacity duration-300;
-    z-index: 1;
-
-    &::after {
-      content: '';
-      @apply absolute left-1/2 border-t border-transparent;
-      bottom: 1px;
-      width: 0;
-      height: 0;
-      border-width: 10px 10px 0 10px;
-      transform: translateX(-50%) translateY(100%);
-    }
-  }
-
-  .social-icon {
-    @apply flex items-center justify-center relative w-10 h-10 m-2 rounded-full cursor-pointer text-lg transition-all duration-150;
-
-    &:hover .tooltip {
-      @apply opacity-100 translate-x-0 -translate-y-full;
-    }
-
-    &:active {
-      @apply shadow-inner;
-    }
-  }
+.instagram {
+  display: inline-block;
+  text-align: center;
+  color: #fff;
+  font-size: 220px;
+  line-height: 250px;
+  vertical-align: middle;
+  background: #d6249f;
+  background: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fdf497 5%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.25);
 }

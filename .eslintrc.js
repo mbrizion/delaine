@@ -10,6 +10,10 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': 'error',
+    'no-unused-vars': [
+      'error',
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+    ],
   },
   settings: {
     react: {

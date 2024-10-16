@@ -1,55 +1,23 @@
 import { useEffect } from 'react'
-import Topbar from './components/Topbar'
-import Stars from './components/Stars'
-import Flower from './components/Flower'
+import Header from './components/Header'
+import Carousel from './components/Carousel'
 
 function App() {
   useEffect(() => {
     document.title = "Delaine & D'argile"
-
-    const starsContainer = document.querySelector('.container__elements .pill')
-
-    for (let i = 1; i <= 25; i++) {
-      const star = document.createElement('span')
-      star.className = `star star${i}`
-      star.style.width = `${Math.random() * 3 + 3}px` // Random size
-      star.style.height = star.style.width // Keep it circular
-      star.style.left = `${Math.random() * 175}px` // Random horizontal position
-      star.style.top = `${Math.random() * 230}px` // Random vertical position
-      star.style.transform = `scale(${Math.random() * 0.9 + 0.1})` // Random scale
-      starsContainer.appendChild(star)
-    }
-
-    for (let i = 1; i <= 4; i++) {
-      const lanternX = document.createElement('div')
-      lanternX.className = `lanternX lanternX${i}`
-      const duration = `${Math.random() * 10 + 10}s`
-      lanternX.style.setProperty('--duration', duration)
-      lanternX.style.animationDuration = duration
-      lanternX.style.animationDelay = `${i * 0.5}s`
-      lanternX.style.left = `${Math.random() * 100}px`
-
-      const lanternY = document.createElement('img')
-      lanternY.className = `lanternY lanternY${i}`
-      lanternY.src =
-        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3522775/LanternsLarge.png'
-      lanternY.alt = `Lantern ${i}`
-      lanternY.style.animationDuration = duration
-      lanternX.appendChild(lanternY)
-      starsContainer.appendChild(lanternX)
-    }
   }, [])
+
+  const images = [
+    'https://via.placeholder.com/600x400/FF5733/FFFFFF?text=Image+1',
+    'https://via.placeholder.com/600x400/33FF57/FFFFFF?text=Image+2',
+    'https://via.placeholder.com/600x400/3357FF/FFFFFF?text=Image+3',
+  ]
 
   return (
     <>
-      <Topbar />
-      <div className="h-screen bg-palette-3">
-        <div className="flex w-full h-full items-center justify-center flex-col">
-          <div className="flex justify-center items-center min-h-screen bg-background gap-4">
-            <Stars />
-            <Flower />
-          </div>
-        </div>
+      <div className="flex flex-col items-center bg-red-100 p-2">
+        <Header classNames="w-full" />
+        <Carousel classNames="w-full" images={images} />
       </div>
     </>
   )
