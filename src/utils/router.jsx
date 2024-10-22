@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from '../App.jsx'
+import Potery from '../components/Potery.jsx'
 
 const router = createBrowserRouter([
   {
@@ -7,8 +8,8 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: '/about',
-    element: <App />,
+    path: '/potery',
+    element: <Potery />,
   },
 ])
 

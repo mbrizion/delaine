@@ -1,76 +1,123 @@
-import { cn } from '../utils/cn'
-import React, { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { HiChevronLeft, HiChevronRight, HiX } from 'react-icons/hi'
 
-const Carousel = ({ images, classNames }) => {
+const Carousel = ({ category }) => {
+  const { items } = category
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [loading, setLoading] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
+  const [touchStartX, setTouchStartX] = useState(null)
+
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleEscape)
+    return () => {
+      window.removeEventListener('keydown', handleEscape)
+    }
+  }, [])
 
   const nextImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length)
   }
 
   const prevImage = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1,
+      prevIndex === 0 ? items.length - 1 : prevIndex - 1,
     )
   }
 
-  const handleTouchStart = (e) => {
-    const touchStartX = e.touches[0].clientX
-    const handleTouchMove = (event) => {
-      const touchEndX = event.touches[0].clientX
-      const diffX = touchStartX - touchEndX
-
-      if (diffX > 50) {
-        nextImage()
-        removeTouchMoveListener()
-      } else if (diffX < -50) {
-        prevImage()
-        removeTouchMoveListener()
-      }
-    }
-
-    const removeTouchMoveListener = () => {
-      document.removeEventListener('touchmove', handleTouchMove)
-      document.removeEventListener('touchend', removeTouchMoveListener)
-    }
-
-    document.addEventListener('touchmove', handleTouchMove)
-    document.addEventListener('touchend', removeTouchMoveListener)
+  const handleImageClick = () => {
+    setIsOpen(true)
   }
 
-  useEffect(() => {
-    const preloadImages = images.map((image) => {
-      const img = new Image()
-      img.src = image
-      return img
-    })
-  }, [images])
+  const handleClose = () => {
+    setIsOpen(false)
+    setCurrentIndex(0)
+  }
+
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.touches[0].clientX)
+  }
+
+  const handleTouchMove = (e) => {
+    if (touchStartX !== null) {
+      const touchEndX = e.touches[0].clientX
+      const diffX = touchStartX - touchEndX
+
+      if (Math.abs(diffX) > 50) {
+        if (diffX > 0) {
+          nextImage()
+        } else {
+          prevImage()
+        }
+        setTouchStartX(null)
+      }
+    }
+  }
+
+  const handleTouchEnd = () => {
+    setTouchStartX(null)
+  }
 
   return (
-    <div className={cn('flex justify-center bg-white mt-2', classNames)}>
-      <div className="relative">
-        <img
-          src={images[currentIndex]}
-          alt={`Carousel Image ${currentIndex + 1}`}
-          className="w-full h-auto transition-opacity duration-300 ease-in-out"
-          onTouchStart={handleTouchStart}
-          onLoad={() => setLoading(false)}
-          style={{ opacity: loading ? 0 : 1 }}
-        />
-        <button
-          onClick={prevImage}
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 text-white bg-black rounded-full p-2 hidden md:block"
-        >
-          &lt;
-        </button>
-        <button
-          onClick={nextImage}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white bg-black rounded-full p-2 hidden md:block"
-        >
-          &gt;
-        </button>
-      </div>
+    <div className="w-fit">
+      <img
+        src={items[0].image}
+        alt={`Main Image`}
+        className="w-full max-w-xl h-80 object-contain cursor-pointer mx-auto"
+        onClick={handleImageClick}
+      />
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
+          <div className="flex items-center justify-center w-full h-full relative">
+            <button
+              className="absolute top-4 right-4 text-white text-2xl"
+              onClick={handleClose}
+            >
+              <HiX />
+            </button>
+
+            <div
+              className="flex justify-center items-center w-full h-full flex-col md:flex-row max-w-full max-h-[600px] md:max-h-auto md:w-auto"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              <div className="hidden md:flex items-center">
+                <button
+                  onClick={prevImage}
+                  className="text-white text-6xl p-2 bg-opacity-50 rounded-full"
+                >
+                  <HiChevronLeft />
+                </button>
+              </div>
+              <img
+                src={items[currentIndex].image}
+                alt={`Image ${currentIndex + 1}`}
+                className="object-contain max-w-full max-h-[600px] md:max-h-auto md:w-auto"
+              />
+              <div className="bg-white bg-opacity-90 p-4 flex flex-col justify-between h-full w-96 ">
+                <div className="flex-grow">
+                  <h2 className="text-xl font-semibold mb-2">Details</h2>
+                  <p className="text-base">{items[currentIndex].def}</p>
+                </div>
+              </div>
+              <div className="hidden md:flex items-center">
+                <button
+                  onClick={nextImage}
+                  className="text-white text-6xl p-2 bg-opacity-50 rounded-full"
+                >
+                  <HiChevronRight />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
