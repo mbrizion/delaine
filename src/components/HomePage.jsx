@@ -15,7 +15,7 @@ const HomePage = ({ imageSrc, altText }) => {
         <h1 className="text-white text-center text-4xl md:text-6xl font-medium mb-20 opacity-0 transform translate-y-8 transition-opacity duration-1000 ease-out delay-300 animate-fade-in">
           De laine et d'argile
         </h1>
-        <div className="flex flex-col items-center gap-4 opacity-0 transform translate-y-8 transition-opacity duration-1000 ease-out delay-1000 animate-fade-in">
+        <div className="flex flex-col items-center gap-4 opacity-0 transform translate-y-8 transition-opacity duration-1000 ease-out delay-[3s] animate-fade-in">
           <h1 className="text-3xl md:text-5xl font-medium text-white text-center">
             Bienvenue dans l’univers de la poterie et du crochet !
           </h1>
