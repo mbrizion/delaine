@@ -4,12 +4,16 @@ import Potery from '../components/Potery.jsx'
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/delaine/',
     element: <App />,
   },
   {
-    path: '/potery',
+    path: '/potery/',
     element: <Potery />,
+  },
+  {
+    path: '*',
+    element: <App />,
   },
 ])
 

@@ -7,28 +7,47 @@ import instadark from '../assets/img/instadark.png'
 import { instaLink } from '../config.json'
 import { GiPaintedPottery, GiWool } from 'react-icons/gi'
 import { HiOutlineChatAlt2 } from 'react-icons/hi'
+import { useTranslation } from 'react-i18next'
+import fr from '../assets/img/fr.svg'
+import us from '../assets/img/us.svg'
+
+const flagIcons = { fr, us }
 
 const Header = ({ classNames, logoClassnames }) => {
   const [isHovered, setIsHovered] = useState(false)
+  const { t, i18n } = useTranslation()
+  const [language, setLanguage] = useState(i18n.language || 'fr')
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const navigate = useNavigate()
 
   const menuItems = [
     {
       icon: <GiPaintedPottery className="text-3xl text-slate-800" />,
-      label: 'Poterie',
+      label: t('pottery'),
       route: '/potery',
     },
     {
       icon: <GiWool className="text-3xl text-slate-800" />,
-      label: 'Crochet',
+      label: t('crochet'),
       route: '/crochet',
     },
     {
       icon: <HiOutlineChatAlt2 className="text-3xl text-slate-800" />,
-      label: 'Contact',
+      label: t('contact'),
       route: '/contact',
     },
   ]
+
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang)
+    i18n.changeLanguage(lang)
+    setIsDropdownOpen(false)
+  }
+
+  // Function to get the opposite language flag
+  const getOppositeLanguage = () => {
+    return language === 'fr' ? 'us' : 'fr'
+  }
 
   return (
     <header className={cn('bg-white shadow-sm', classNames)}>
@@ -63,6 +82,55 @@ const Header = ({ classNames, logoClassnames }) => {
               </li>
             ))}
           </ul>
+
+          {/* Modern Language Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-200 transition-colors duration-300"
+            >
+              <img
+                src={flagIcons[language]}
+                alt="selected language flag"
+                className="w-6 h-6"
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className={`h-4 w-4 transition-transform duration-300 ${
+                  isDropdownOpen ? 'rotate-180' : ''
+                }`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            {isDropdownOpen && (
+              <div className="absolute bg-white border border-gray-200 shadow-lg overflow-hidden z-20 flex items-center rounded-md">
+                <ul className="flex flex-col text-gray-700">
+                  <li
+                    onClick={() => handleLanguageChange(getOppositeLanguage())}
+                    className="flex items-center p-2 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                  >
+                    <img
+                      src={flagIcons[getOppositeLanguage()]}
+                      alt={`${getOppositeLanguage()} flag`}
+                      className="w-5 h-5 mr-2"
+                    />
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {/* Instagram Hover Effect */}
           <div className="relative">
             <div
               className="relative w-8 h-8"
