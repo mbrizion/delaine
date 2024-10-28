@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Header from './components/Header'
 import PresentationPage from './components/PresentationPage'
 import HomePage from './components/HomePage'
-import homepageBg from './assets/img/homepage.jpg'
+import homepageBg from './assets/img/favicon.png'
 
 function App() {
   const targetRef = useRef(null)
@@ -13,8 +13,6 @@ function App() {
   }, [])
 
   useEffect(() => {
-    document.title = "Delaine & D'argile"
-
     const handleScroll = () => {
       const scrollPosition = window.scrollY
 

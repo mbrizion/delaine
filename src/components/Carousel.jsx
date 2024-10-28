@@ -8,6 +8,14 @@ const Carousel = ({ category }) => {
   const [touchStartX, setTouchStartX] = useState(null)
 
   useEffect(() => {
+    const preloadImages = () => {
+      items.forEach((item) => {
+        const img = new Image()
+        img.src = item.image
+      })
+    }
+    preloadImages()
+
     const handleEscape = (event) => {
       if (event.key === 'Escape') {
         setIsOpen(false)
@@ -18,7 +26,7 @@ const Carousel = ({ category }) => {
     return () => {
       window.removeEventListener('keydown', handleEscape)
     }
-  }, [])
+  }, [items])
 
   const nextImage = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length)
@@ -35,6 +43,7 @@ const Carousel = ({ category }) => {
   }
 
   const handleClose = () => {
+    console.log('Modal closed') // Debug log
     setIsOpen(false)
     setCurrentIndex(0)
   }
@@ -72,15 +81,16 @@ const Carousel = ({ category }) => {
         onClick={handleImageClick}
       />
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
-          <div className="flex items-center justify-center w-full h-full relative">
-            <button
-              className="absolute top-4 right-4 text-white text-2xl"
-              onClick={handleClose}
-            >
-              <HiX />
-            </button>
-
+        <div className="fixed inset-0 flex items-center justify-center transition-all">
+          <div
+            className="bg-black bg-opacity-80 h-screen w-screen absolute"
+            onClick={handleClose}
+          />
+          <HiX
+            className="absolute text-2xl text-white top-4 right-4 cursor-pointer"
+            onClick={handleClose}
+          />
+          <div className="relative z-10 p-2">
             <div
               className="flex justify-center items-center w-full h-full flex-col md:flex-row max-w-full max-h-[600px] md:max-h-auto md:w-auto"
               onTouchStart={handleTouchStart}
@@ -98,9 +108,9 @@ const Carousel = ({ category }) => {
               <img
                 src={items[currentIndex].image}
                 alt={`Image ${currentIndex + 1}`}
-                className="object-contain max-w-full max-h-[600px] md:max-h-auto md:w-auto"
+                className="object-contain max-w-full max-h-[600px] md:max-h-auto md:w-auto rounded-t-lg md:rounded-none md:rounded-l-lg"
               />
-              <div className="bg-white bg-opacity-90 p-4 flex flex-col justify-between h-full w-96 ">
+              <div className="bg-white bg-opacity-90 p-4 flex flex-col justify-between h-[600px] w-96 rounded-b-lg md:rounded-none md:rounded-r-lg">
                 <div className="flex-grow">
                   <h2 className="text-xl font-semibold mb-2">Details</h2>
                   <p className="text-base">{items[currentIndex].def}</p>
