@@ -6,19 +6,9 @@ const Contact = () => {
   const { t } = useTranslation()
 
   useEffect(() => {
-    const loadInstagramScript = () => {
-      if (!document.querySelector('#instagram-embed-script')) {
-        const script = document.createElement('script')
-        script.id = 'instagram-embed-script'
-        script.src = 'https://www.instagram.com/embed.js'
-        script.async = true
-        document.body.appendChild(script)
-      } else {
-        window.instgrm.Embeds.process() // Reload the Instagram embeds if the script already exists
-      }
+    if (window.instgrm) {
+      window.instgrm.Embeds.process()
     }
-
-    loadInstagramScript()
   }, [])
 
   return (
@@ -35,18 +25,11 @@ const Contact = () => {
           </div>
           <p className="text-lg">{t('dmInsta')}</p>
           {/* Instagram Embed */}
-          <div className="w-full max-w-md">
+          <div className="w-full max-w-md flex justify-center">
             <blockquote
-              className="instagram-media"
+              className="instagram-media w-full"
               data-instgrm-permalink="https://www.instagram.com/delaine.et.dargile/"
               data-instgrm-version="14"
-              style={{
-                background: '#FFF',
-                border: '1px solid #dbdbdb',
-                borderRadius: '4px',
-                padding: '16px',
-                width: '100%',
-              }}
             >
               <a href="https://www.instagram.com/delaine.et.dargile/">
                 {t('checkInstagram')}

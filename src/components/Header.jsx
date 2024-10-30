@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from '../assets/img/logo.png'
-import { cn } from '../utils/cn'
+import { cn } from '../utils/cn.js'
 import insta from '../assets/img/insta.svg'
 import instadark from '../assets/img/instadark.png'
 import { instaLink } from '../config.json'
-import { GiPaintedPottery, GiWool } from 'react-icons/gi'
+import { GiPaintedPottery, GiShoppingBag, GiWool } from 'react-icons/gi'
 import { HiOutlineChatAlt2 } from 'react-icons/hi'
 import { useTranslation } from 'react-i18next'
 import fr from '../assets/img/fr.svg'
@@ -22,6 +22,11 @@ const Header = ({ classNames, logoClassnames }) => {
   const dropdownRef = useRef(null)
 
   const menuItems = [
+    {
+      icon: <GiShoppingBag className="text-3xl text-slate-800" />,
+      label: t('shop'),
+      route: '/shop',
+    },
     {
       icon: <GiPaintedPottery className="text-3xl text-slate-800" />,
       label: t('pottery'),
@@ -91,13 +96,26 @@ const Header = ({ classNames, logoClassnames }) => {
               {menuItems.map((item, index) => (
                 <li
                   key={index}
-                  className="relative cursor-pointer flex flex-col items-center"
-                  onClick={() => navigate(item.route)}
+                  className={cn(
+                    'relative cursor-pointer flex flex-col items-center',
+                    item.disabled && 'text-gray-400 cursor-not-allowed',
+                  )}
+                  onClick={() => !item.disabled && navigate(item.route)}
                 >
-                  <div className="flex gap-2">
+                  <div
+                    className={cn(
+                      'flex gap-2',
+                      item.disabled && 'text-gray-400 cursor-not-allowed',
+                    )}
+                  >
                     {item.icon}
                     <span className="hidden md:block">{item.label}</span>
                   </div>
+                  {item.disabled && (
+                    <span className="absolute top-1 bg-[#548cb8] text-white text-xs rounded px-2 py-1 animate-pulseSlow">
+                      {t('coming_soon')}
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>

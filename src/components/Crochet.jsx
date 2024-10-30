@@ -1,6 +1,6 @@
 import Header from './Header'
 import Carousel from './Carousel'
-import categories from '../config/crochet'
+import categories from '../config/crochet.js'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 

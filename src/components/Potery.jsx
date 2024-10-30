@@ -1,6 +1,6 @@
 import Header from './Header'
 import Carousel from './Carousel'
-import categories from '../config/potery'
+import categories from '../config/potery.js'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 

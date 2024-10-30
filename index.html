@@ -4,16 +4,22 @@
     <meta charset="UTF-8" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src * self blob: data: gap:; style-src * self 'unsafe-inline' blob: data: gap:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' blob: data: gap:; object-src * 'self' blob: data: gap:; img-src * self 'unsafe-inline' blob: data: gap:; connect-src self * 'unsafe-inline' blob: data: gap:; frame-src * self blob: data: gap:;"
+      content="
+      default-src 'self' https://www.instagram.com blob: data:;
+      style-src 'self' 'unsafe-inline' https://www.instagram.com blob: data:;
+      script-src 'self' https://mbrizion.github.io https://www.instagram.com 'unsafe-eval' 'unsafe-inline' blob: data:;
+      img-src 'self' https://www.instagram.com blob: data:;
+      connect-src 'self' https://www.instagram.com blob: data:;
+      frame-src 'self' https://www.instagram.com blob: data:;
+      "
     />
     <link rel="icon" type="image/svg+xml" href="./favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <script async src="https://www.instagram.com/embed.js"></script>
     <title>Delaine & D'argile</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="src/main.jsx"></script>
-    <script async src="//www.instagram.com/embed.js"></script>
   </body>
 </html>

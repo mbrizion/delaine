@@ -26,6 +26,7 @@ const resources = {
       checkInstagram: 'My instagram',
       dmInsta: 'Or DM me on instagram :',
       process: 'The process',
+      shop: 'Shop',
     },
   },
   fr: {
@@ -53,6 +54,7 @@ const resources = {
         "Pour toute question ou projet, n'hésitez pas à me contacter par mail :",
       checkInstagram: 'Découvrez notre Instagram',
       dmInsta: 'ou sur instagram :',
+      shop: 'Boutique',
     },
   },
 }

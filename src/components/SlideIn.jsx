@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { cn } from '../utils/cn'
+import { cn } from '../utils/cn.js'
 
 const SlideIn = ({ children, direction = 'right' }) => {
   const [isVisible, setIsVisible] = useState(false)
